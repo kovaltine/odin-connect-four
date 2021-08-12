@@ -157,3 +157,7 @@ describe 'check for any win using check_winner?' do
     end
   end
 end
+
+# what's the next thing i need to test?
+# how do i test the board being printed out properly?
+# player input?

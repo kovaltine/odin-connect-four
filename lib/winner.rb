@@ -1,92 +1,8 @@
 # frozen_string_literal: true
 
-require './winner'
-require 'colorize'
-
-# connect four game
-class ConnectFour
-  # include Winner
-
-  # six rows by seven columns
-  def initialize(board = Array.new(6) { Array.new(7, '.') })
-    @board = board
-    @player = 'O'.colorize(:red)
-  end
-
-  # put all of the display in the same module as well
-  def show_board
-    index = 0
-    puts "\n"
-    @board.map do |line|
-      puts "| #{line[0]} | #{line[1]} | #{line[2]} | #{line[3]} | #{line[4]} | #{line[5]} | #{line[6]} |"
-      index += 1
-    end
-    puts '  0   1   2   3   4   5   6  '.colorize(:yellow)
-  end
-
-  def end_game
-    if check_winner?
-      puts "Congratulations player #{@player}, you won!"
-    else
-      puts "tough game, it's a draw!"
-    end
-  end
-
-  # could definitely make this better
-  def play_game
-    until check_winner?
-      toggle_player
-      show_board
-      player_input
-      # break if check_winner?
-      break if check_draw?
-
-    end
-    end_game
-  end
-
-  def check_draw?
-    @board.map do |line|
-      return false if line.include?('.')
-    end
-    true
-  end
-
-  def toggle_player
-    case @player
-    when 'X'.colorize(:light_blue)
-      @player = 'O'.colorize(:red)
-    when 'O'.colorize(:red)
-      @player = 'X'.colorize(:light_blue)
-    end
-  end
-
-  def player_input
-    puts "player #{@player}, pick a column"
-    column = gets.to_i
-    player_input until valid_input?(column)
-    update_board(column)
-  end
-
-  def update_board(column)
-    index = 5
-    while index > -1
-      if @board[index][column].include?('.')
-        @board[index][column] = @player
-        return
-      end
-      index -= 1
-    end
-    puts 'that column is full'
-    player_input
-  end
-
-  def valid_input?(column)
-    return true if column.between?(0, 6)
-
-    false
-  end
-
+# determines if there is a winner
+module Winner
+  # do i only need two of these? yes i think so.
   DIAGONAL_PATTERNS = [[1, -1],
                        [1, 1]].freeze
   #    [-1, -1],
@@ -170,22 +86,18 @@ class ConnectFour
     index = 0
     counter = 0
 
-    # p "positions of #{@player}: #{position}"
+    p "positions of #{@player}: #{position}"
     # position should never be nil
     # return false if position[index].nil?
 
-    # i should see counter = 0 *2 if
     DIAGONAL_PATTERNS.map do |prediction|
-      p "prediction #{prediction}"
       next_position = position[index] # <-- starting point
       while position.include?(next_position)
         next_position = []
         # alter the coordinates according to one of the DIAGONAL_PATTERNS
         # break if position[index].nil?
 
-        # how i do conserve the negative? does it matter?
-        p "prediction[1]: #{prediction[1]}"
-        next_position.push(position[index][0] + (prediction[1]))
+        next_position.push(position[index][0] + prediction[1])
         next_position.push(position[index][1] + prediction[0])
         # if that coordinate is on the board, increment the counter
         p "prediction of the next point for #{@player}: #{next_position}"
@@ -194,7 +106,6 @@ class ConnectFour
 
         puts "counter: #{counter}"
         return true if counter == 3
-        break if counter == 0
 
         index += 1
       end
@@ -204,7 +115,7 @@ class ConnectFour
 
   # counter isn't incrementing properly
   # arr represents the positions that that player currently has
-  def increment_counter?(arr, curr_position)
+  def increment_counter(arr, curr_position)
     return true if arr.include?(curr_position)
 
     false
@@ -244,9 +155,3 @@ class ConnectFour
     false
   end
 end
-
-game = ConnectFour.new
-game.play_game
-# p game.diagonal_wins?
-# game.horizontal_wins?
-# game.vertical_wins?

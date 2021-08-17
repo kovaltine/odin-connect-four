@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
+DIAGONAL_PATTERNS = [[1, -1],
+                     [1, 1],
+                     [-1, -1],
+                     [-1, 1]].freeze
+
 # determines if there is a winner
 module Winner
-  # do i only need two of these? yes i think so.
-  DIAGONAL_PATTERNS = [[1, -1],
-                       [1, 1]].freeze
-  #    [-1, -1],
-  #    [-1, 1]
-
   # count the number of 'X' in each row
   def horizontal_wins?
     win = false
@@ -70,13 +69,8 @@ module Winner
       one_line = check_player_location(line) if line.include?(@player)
       whole_grid.push(one_line)
     end
-    # remove nested array using flatten
-    puts "position for #{@player}: #{whole_grid.flatten(1)}"
 
-    if check_diagonal_pattern(whole_grid.flatten(1))
-      p 'diagonal win'
-      return true
-    end
+    return true if check_diagonal_pattern(whole_grid.flatten(1))
 
     false
   end
@@ -85,27 +79,14 @@ module Winner
   def check_diagonal_pattern(position)
     index = 0
     counter = 0
-
-    p "positions of #{@player}: #{position}"
-    # position should never be nil
-    # return false if position[index].nil?
-
     DIAGONAL_PATTERNS.map do |prediction|
       next_position = position[index] # <-- starting point
       while position.include?(next_position)
-        next_position = []
-        # alter the coordinates according to one of the DIAGONAL_PATTERNS
-        # break if position[index].nil?
 
-        next_position.push(position[index][0] + prediction[1])
-        next_position.push(position[index][1] + prediction[0])
-        # if that coordinate is on the board, increment the counter
-        p "prediction of the next point for #{@player}: #{next_position}"
-
-        increment_counter?(position, next_position) ? counter += 1 : counter = 0
-
-        puts "counter: #{counter}"
+        next_position = new_coordinates(prediction, next_position)
+        position.include?(next_position) ? counter += 1 : counter = 0
         return true if counter == 3
+        break if counter.zero?
 
         index += 1
       end
@@ -113,22 +94,39 @@ module Winner
     false
   end
 
-  # counter isn't incrementing properly
-  # arr represents the positions that that player currently has
-  def increment_counter(arr, curr_position)
+  def new_coordinates(prediction, position)
+    arr = []
+    first_num = -1
+    index = 0
+    prediction.map do |pattern|
+      first_num = if pattern.negative?
+                    negative_position(position[index])
+                  else
+                    positive_position(position[index])
+                  end
+      arr.push(first_num)
+      index += 1
+    end
+    arr
+  end
+
+  def negative_position(coord)
+    num = coord
+    num -= 1
+    num
+  end
+
+  def positive_position(coord)
+    num = coord
+    num += 1
+    num
+  end
+
+  def increment_counter?(arr, curr_position)
+    p "increment counter arr #{arr}"
     return true if arr.include?(curr_position)
 
     false
-
-    # arr.map do |coord|
-    #   # if the coordinate matches the next position according to the pattern, then you know it follows the diagonal pattern
-    #   next unless coord == curr_position
-
-    #   # specify the player
-    #   puts "coordinate: #{coord}"
-    #   return 1
-    # end
-    # 0
   end
 
   # find one line of indexes of a player's tic

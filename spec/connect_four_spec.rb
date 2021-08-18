@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../lib/connect_four'
+require_relative '../lib/game'
+# require_relative '../lib/connect_four'
 
 # build connect four using test driven development
 

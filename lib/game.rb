@@ -2,6 +2,8 @@
 
 require './connect_four'
 
+# functions for the game loop
+
 def connect_four_game
   while play_again?
     game = ConnectFour.new

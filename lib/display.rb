@@ -2,6 +2,7 @@
 
 require './connect_four'
 
+# user display
 module Display
   def show_board
     index = 0

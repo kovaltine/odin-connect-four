@@ -10,20 +10,12 @@ Description:
 
     Testing for this appliction is included in the spec folder. I used the testing particularly for the win functions to ensure they were working properly.
 
-    Future improvements:
+
+Future improvements:
     - diagnose diagonal wins issues
     - improve player_input function 
         - currently all letters are converted to 0 and accepted for column selection
     - create an AI so that players can play the game on their own
-
-
-A README needs to answer the following what, why, and how:
-
-    What was your motivation?
-    Why did you build this project?
-    What problem does it solve?
-    What did you learn?
-    What makes your project stand out? If your project has a lot of features, consider adding a "Features" section and listing them here.
 
 
 How to Use

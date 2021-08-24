@@ -12,6 +12,7 @@ Description:
 
 
 Future improvements:
+
     - diagnose diagonal wins issues
     - improve player_input function 
         - currently all letters are converted to 0 and accepted for column selection

@@ -19,7 +19,7 @@ Future improvements:
     - create an AI so that players can play the game on their own
 
 
-How to Use
+How to Use:
 
     To use this application copy the files and in the console run the command: ruby lib/game.rb
     

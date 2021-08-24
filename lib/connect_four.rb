@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
-# bugs: when a player enters a letter, it reads as 0
-# when a player wins diaginally after entering invalid input, it takes 2 more moves for comp to read the win.
-# ^ in this case there were 2 invalid inputs.
-# entering invalid input seems to mess with the diagonal wins
+# bug: when a player enters a letter, it reads as 0
 
-require './winner'
+require_relative './winner'
 require 'colorize'
-require './display'
+require_relative './display'
 
 # connect four game
 class ConnectFour
@@ -72,36 +69,4 @@ class ConnectFour
 
     false
   end
-
-  # def player_input
-  #   puts "player #{@player}, pick a column"
-  #   column_string = gets.chomp
-  #   # use regex expressions to see if it matches '0-9'
-  #   match = /\d/.match(column_string)
-  #   # column = match[0].to_i
-  #   valid_input?(match)
-  # end
-
-  # def update_board(column)
-  #   index = 5
-  #   while index > -1
-  #     if @board[index][column].include?('.')
-  #       @board[index][column] = @player
-  #       return
-  #     end
-  #     index -= 1
-  #   end
-  #   puts 'that column is full'
-  #   player_input
-  # end
-
-  # def valid_input?(match)
-  #   player_input if match.nil?
-
-  #   column = match[0].to_i
-  #   update_board(column) if column.between?(0, 6)
-  # end
 end
-
-# game = new.ConnectFour
-# game.player_input

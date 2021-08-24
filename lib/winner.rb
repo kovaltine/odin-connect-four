@@ -9,7 +9,6 @@ DIAGONAL_PATTERNS = [[1, -1],
 module Winner
   # count the number of 'X' in each row
   def horizontal_wins?
-    # win = false
     @board.map do |line|
       win = check_row?(line)
       next unless win

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require './connect_four'
-
-# functions for the game loop
+require_relative './connect_four'
 
 def connect_four_game
   while play_again?

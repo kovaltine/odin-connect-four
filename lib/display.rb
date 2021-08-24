@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './connect_four'
+require_relative './connect_four'
 
 # user display
 module Display

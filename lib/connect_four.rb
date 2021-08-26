@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# bug: when a player enters a letter, it reads as 0
-
 require_relative './winner'
 require 'colorize'
 require_relative './display'

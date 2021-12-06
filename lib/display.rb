@@ -6,7 +6,7 @@ require_relative './connect_four'
 module Display
   def show_board
     index = 0
-    puts "\n"
+    system('clear')
     @board.map do |line|
       puts "| #{line[0]} | #{line[1]} | #{line[2]} | #{line[3]} | #{line[4]} | #{line[5]} | #{line[6]} |"
       index += 1

@@ -60,13 +60,11 @@ module Winner
     false
   end
 
-  # if the index matches the pattern *4 then we know it's a match
   def diagonal_wins?
     whole_grid = []
     one_line = []
     @board.map do |line|
       one_line = check_player_location(line) if line.include?(@player)
-      # create an array of locations after searching for coordinates line by line
       whole_grid.push(one_line)
     end
 
@@ -81,7 +79,6 @@ module Winner
     index = 0
     line.map do |pos|
       if pos == @player
-        # put the coordinates in their own sub array
         temp = []
         temp.push(@board.index(line), index)
         arr.push(temp)
@@ -97,8 +94,7 @@ module Winner
     index = 0
     counter = 0
     DIAGONAL_PATTERNS.map do |prediction|
-      next_position = position[index] # <-- starting point
-      # if the predicted coordinates are in the position array
+      next_position = position[index]
       while position.include?(next_position)
         next_position = new_coordinates(prediction, next_position)
         position.include?(next_position) ? counter += 1 : counter = 0
